@@ -1,0 +1,10 @@
+/*file to store all the custom css that does not come from the bootstrap minimum */
+
+body {
+    padding-top: 100px;
+
+}
+
+#navbar-gap {
+    margin-top: -4%;
+}
