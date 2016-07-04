@@ -4,10 +4,16 @@ var faker = require('faker');
 var Category = require('../models/category');
 var Product = require('../models/product');
 
+router.post('/search', function (req, res, next) {
+    Product.search({
+        query_string: { query: req.body.search_term}}
+    , function (err, results) {
+    if (err) return next(err);
+    res.json(results);
+});
+});
 
 router.get('/:name', function( req, res, next) {
-
-
 
     async.waterfall([
         function(callback) {
@@ -17,12 +23,12 @@ router.get('/:name', function( req, res, next) {
             });
         },
 
-        function(category) {
-            for (var i=0; i<30; i++){
+        function(category, callback) {
+            for (var i = 0; i < 30; i++) {
                 var product = new Product();
                 product.category = category._id;
                 product.name = faker.commerce.productName();
-                product.price = faker.commerce.price();
+                //product.price = faker.commerce.price();
                 product.image = faker.image.image();
 
                 product.save();
